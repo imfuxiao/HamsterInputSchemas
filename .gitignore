@@ -1,0 +1,10 @@
+.DS_Store
+.build
+.swiftpm
+.netrc
+/lib
+.vscode
+.plum
+.deps
+.clover
+package
