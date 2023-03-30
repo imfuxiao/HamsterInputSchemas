@@ -21,7 +21,7 @@ rm -rf .deps && mkdir -p .deps && (
 )
 
 # 输入方案
-OUTPUT=".plum/SharedSupport"
+OUTPUT=".SharedSupport"
 rm -rf .plum
 git clone --depth 1 https://github.com/rime/plum.git .plum
 
