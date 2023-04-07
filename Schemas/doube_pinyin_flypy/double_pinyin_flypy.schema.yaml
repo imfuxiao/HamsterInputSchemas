@@ -13,15 +13,19 @@ schema:
     小鹤双拼方案。
 
 switches:
+  - name: zh_simp_s2t
+    reset: 0
+    states: [ 简, 繁 ]
   - name: ascii_mode
     reset: 0
     states: [中文, 西文]
   - name: full_shape
     states: [半角, 全角]
   - name: ascii_punct
+    reset: 1
     states: [。，, ．，]
   - name: emoji_suggestion
-    # reset: 1
+    reset: 0
     states: ["🈚️️", "🈶️"]
 
 engine:
@@ -52,6 +56,10 @@ engine:
     # - lua_filter@single_char_first # 单字优先
     # - lua_filter@single_char_only # 只显示单字
 
+simplifier:
+  option_name: zh_simp_s2t
+  opencc_config: s2t.json
+
 emoji_suggestion:
   opencc_config: emoji.json
   option_name: emoji_suggestion
@@ -71,28 +79,28 @@ speller:
     # 依据个人情况修改注释～
 
     # 声母部分
-    # - derive/^([z])h/$1/ # zh => z
-    # - derive/^([z])([^h])/$1h$2/ # z => zh
-    # - derive/^([c])h/$1/ # ch => c
-    # - derive/^([c])([^h])/$1h$2/ # c => ch
-    # - derive/^([s])h/$1/ # sh => s
-    # - derive/^([s])([^h])/$1h$2/ # s => sh
-    # - derive/^l/n/ # l => n
-    # - derive/^n/l/ # n => l
+    #- derive/^([z])h/$1/ # zh => z
+    #- derive/^([z])([^h])/$1h$2/ # z => zh
+    #- derive/^([c])h/$1/ # ch => c
+    #- derive/^([c])([^h])/$1h$2/ # c => ch
+    #- derive/^([s])h/$1/ # sh => s
+    #- derive/^([s])([^h])/$1h$2/ # s => sh
+    #- derive/^l/n/ # l => n
+    #- derive/^n/l/ # n => l
     #- derive/^r/l/ # r => l
     #- derive/^r/y/ # r => y
     #- derive/^hu$/fu/ # hu => fu
     #- derive/^fu$/hu/ # fu => hu
 
     # 韵母部分
-    - derive/([^iu])([a])n$/$1$2ng/ # an => ang
-    - derive/([^iu])([a])ng$/$1$2n/ # ang => an
-    - derive/([e])n$/$1ng/ # en => eng
-    - derive/([e])ng$/$1n/ # eng => en
-    # - derive/([i])n$/$1ng/ # in => ing
-    # - derive/([i])ng$/$1n/ # ing => in
-    # - derive/([i])an$/$1ang/ # ian => iang
-    # - derive/([i])ang$/$1an/ # iang => ian
+    #- derive/([^iu])([a])n$/$1$2ng/ # an => ang
+    #- derive/([^iu])([a])ng$/$1$2n/ # ang => an
+    #- derive/([e])n$/$1ng/ # en => eng
+    #- derive/([e])ng$/$1n/ # eng => en
+    #- derive/([i])n$/$1ng/ # in => ing
+    #- derive/([i])ng$/$1n/ # ing => in
+    #- derive/([i])an$/$1ang/ # ian => iang
+    #- derive/([i])ang$/$1an/ # iang => ian
     # 由于小鹤双拼特性，无需 uang <=> iang
 
     # 其它模糊音

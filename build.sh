@@ -22,7 +22,7 @@ rm -rf .deps && mkdir -p .deps && (
 
 # 输入方案
 OUTPUT=".SharedSupport"
-rm -rf .plum
+rm -rf .plum $OUTPUT
 git clone --depth 1 https://github.com/rime/plum.git .plum
 
 # 可以在这里添加rime的开源输入方案
@@ -42,7 +42,8 @@ rm -rf .clover && mkdir -p .clover && (
 ) && cp -R .clover/* ${OUTPUT}
 
 # 内置极点五笔, qq五笔, 小鹤双拼
-internalSchemas=("wubi86_jidian" "wubi86_qq" "doube_pinyin_flypy")
+#internalSchemas=("wubi86_jidian" "wubi86_qq" "doube_pinyin_flypy")
+internalSchemas=("doube_pinyin_flypy")
 for schema in "${internalSchemas[@]}"
 do
   cp -R Schemas/${schema}/* ${OUTPUT}
