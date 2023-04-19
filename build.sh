@@ -26,6 +26,8 @@ rm -rf .plum $OUTPUT
 git clone --depth 1 https://github.com/rime/plum.git .plum
 
 # 可以在这里添加rime的开源输入方案
+# https://github.com/rime/rime-double-pinyin.git
+# for package in essay prelude rime-double-pinyin; do
 for package in essay prelude; do
   bash .plum/scripts/install-packages.sh "${package}" "${OUTPUT}"
 done
@@ -42,12 +44,21 @@ rm -rf .clover && mkdir -p .clover && (
 ) && cp -R .clover/* ${OUTPUT}
 
 # 内置极点五笔, qq五笔, 小鹤双拼
-#internalSchemas=("wubi86_jidian" "wubi86_qq" "doube_pinyin_flypy")
-internalSchemas=("doube_pinyin_flypy")
+#internalSchemas=("wubi86_jidian" "wubi86_qq" "double_pinyin")
+internalSchemas=("double_pinyin")
 for schema in "${internalSchemas[@]}"
 do
   cp -R Schemas/${schema}/* ${OUTPUT}
 done
+
+# 五笔方案
+# 方案来源: https://github.com/networm/Rime
+rm -rf .networm && \
+  git clone https://github.com/networm/Rime .networm && (
+    cd .networm
+    rm -rf .git .gitignore README.md rime.lua default.custom.yaml
+  ) && cp -R .networm/* ${OUTPUT}
+
 
 pushd "${OUTPUT}" > /dev/null
 
