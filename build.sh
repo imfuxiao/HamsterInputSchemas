@@ -80,7 +80,8 @@ for schema in *.schema.yaml; do
   mv ${schema}.min ${schema}
 done
 
-ls *.schema.yaml | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
+# 排除五笔方案需要的pinyin_simp.schema.yaml
+ls *.schema.yaml| grep -v pinyin_simp.schema.yaml | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
 # 这里不需要只替换luna_pinyin
 # grep -Ff schema_list.yaml default.yaml > schema_list.yaml.min
 # mv schema_list.yaml.min schema_list.yaml
