@@ -59,6 +59,15 @@ rm -rf .networm && \
     rm -rf .git .gitignore README.md rime.lua default.custom.yaml
   ) && cp -R .networm/* ${OUTPUT}
 
+# 星空键道
+# 方案来源: https://github.com/xkinput/Rime_JD
+rm -rf .rime_jd && \
+  bash .plum/scripts/install-packages.sh xkinput/Rime_JD@plum .rime_jd && \
+  cp .rime_jd/xkjd6.*.yaml ${OUTPUT} && \
+  cp .rime_jd/lua/* ${OUTPUT}/lua/ && \
+  cp .rime_jd/opencc/EN2en.* ${OUTPUT}/opencc/ && \
+  echo 'date_time_translator = require("date_time")' >> ${OUTPUT}/rime.lua && \
+  echo 'xkjd6_filter = require("xkjd6_filter")' >> ${OUTPUT}/rime.lua
 
 pushd "${OUTPUT}" > /dev/null
 
