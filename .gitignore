@@ -11,3 +11,5 @@
 package
 .networm
 .rime_jd
+.tmp
+*.zip

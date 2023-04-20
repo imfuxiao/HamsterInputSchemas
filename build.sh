@@ -20,56 +20,59 @@ rm -rf .deps && mkdir -p .deps && (
     tar --bzip2 -xf "${rime_deps_archive}"
 )
 
-# 输入方案
-OUTPUT=".SharedSupport"
+# 输入方案临时目录
+OUTPUT=".tmp"
+DST_PATH="$OUTPUT/SharedSupport"
 rm -rf .plum $OUTPUT
-git clone --depth 1 https://github.com/rime/plum.git .plum
+mkdir -p $DST_PATH
+git clone --depth 1 https://github.com/rime/plum.git $OUTPUT/.plum
 
 # 可以在这里添加rime的开源输入方案
 # https://github.com/rime/rime-double-pinyin.git
 # for package in essay prelude rime-double-pinyin; do
 for package in essay prelude; do
-  bash .plum/scripts/install-packages.sh "${package}" "${OUTPUT}"
+  bash $OUTPUT/.plum/scripts/install-packages.sh "${package}" $DST_PATH
 done
 
 # 四叶草全拼输入法
 rime_cloverpinyin_version="1.1.4"
 rime_cloverpinyin_archive="clover.schema-build-${rime_cloverpinyin_version}.zip"
 rime_cloverpinyin_download_url="https://github.com/fkxxyz/rime-cloverpinyin/releases/download/${rime_cloverpinyin_version}/${rime_cloverpinyin_archive}"
-rm -rf .clover && mkdir -p .clover && (
-    cd .clover
+rm -rf $OUTPUT/.clover && mkdir -p $OUTPUT/.clover && (
+    cd $OUTPUT/.clover
     [ -z "${no_download}" ] && curl -LO "${rime_cloverpinyin_download_url}"
     unzip "${rime_cloverpinyin_archive}" -d .
     rm -rf ${rime_cloverpinyin_archive}
-) && cp -R .clover/* ${OUTPUT}
+) && cp -R $OUTPUT/.clover/* $DST_PATH/
 
 # 内置极点五笔, qq五笔, 小鹤双拼
 #internalSchemas=("wubi86_jidian" "wubi86_qq" "double_pinyin")
 internalSchemas=("double_pinyin")
 for schema in "${internalSchemas[@]}"
 do
-  cp -R Schemas/${schema}/* ${OUTPUT}
+  cp -R Schemas/${schema}/* $DST_PATH/
 done
 
 # 五笔方案
 # 方案来源: https://github.com/networm/Rime
-rm -rf .networm && \
-  git clone https://github.com/networm/Rime .networm && (
-    cd .networm
+rm -rf $OUTPUT/.networm && \
+  git clone https://github.com/networm/Rime $OUTPUT/.networm && (
+    cd $OUTPUT/.networm
     rm -rf .git .gitignore README.md rime.lua default.custom.yaml
-  ) && cp -R .networm/* ${OUTPUT}
+  ) && cp -R $OUTPUT/.networm/* $DST_PATH/
 
 # 星空键道
 # 方案来源: https://github.com/xkinput/Rime_JD
-rm -rf .rime_jd && \
-  bash .plum/scripts/install-packages.sh xkinput/Rime_JD@plum .rime_jd && \
-  cp .rime_jd/xkjd6.*.yaml ${OUTPUT} && \
-  cp .rime_jd/lua/* ${OUTPUT}/lua/ && \
-  cp .rime_jd/opencc/EN2en.* ${OUTPUT}/opencc/ && \
-  echo 'date_time_translator = require("date_time")' >> ${OUTPUT}/rime.lua && \
-  echo 'xkjd6_filter = require("xkjd6_filter")' >> ${OUTPUT}/rime.lua
+rm -rf $OUTPUT/.rime_jd && \
+  bash $OUTPUT/.plum/scripts/install-packages.sh xkinput/Rime_JD@plum $OUTPUT/.rime_jd && \
+  cp $OUTPUT/.rime_jd/xkjd6.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.rime_jd/lua/* ${DST_PATH}/lua/ && \
+  cp $OUTPUT/.rime_jd/opencc/EN2en.* ${DST_PATH}/opencc/ && \
+  echo 'date_time_translator = require("date_time")' >> ${DST_PATH}/rime.lua && \
+  echo 'xkjd6_filter = require("xkjd6_filter")' >> ${DST_PATH}/rime.lua
 
-pushd "${OUTPUT}" > /dev/null
+# 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
+pushd "${DST_PATH}" > /dev/null
 
 # awk '($2 >= 500) {print}' essay.txt > essay.txt.min
 # mv essay.txt.min essay.txt
@@ -89,7 +92,7 @@ for schema in *.schema.yaml; do
   mv ${schema}.min ${schema}
 done
 
-# 排除五笔方案需要的pinyin_simp.schema.yaml
+# 隐藏五笔方案依赖的pinyin_simp.schema.yaml
 ls *.schema.yaml| grep -v pinyin_simp.schema.yaml | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
 # 这里不需要只替换luna_pinyin
 # grep -Ff schema_list.yaml default.yaml > schema_list.yaml.min
@@ -107,9 +110,15 @@ popd > /dev/null
 
 # copy
 # 先将squirrel.yaml拷贝出来
-cp -R SharedSupport/* ${OUTPUT}/ 
+cp -R SharedSupport/* ${DST_PATH}/ 
 
 # 一定要提前编译
 export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:$PWD/.deps/dist/lib
-cp -R .deps/share/opencc ${OUTPUT}
-.deps/dist/bin/rime_deployer --build ${OUTPUT}
+cp -R .deps/share/opencc ${DST_PATH}
+.deps/dist/bin/rime_deployer --build ${DST_PATH}
+
+# 压缩输入方案
+(
+  cd .tmp
+  zip -r SharedSupport.zip SharedSupport
+) && cp $OUTPUT/*.zip .
