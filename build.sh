@@ -25,6 +25,8 @@ OUTPUT=".tmp"
 DST_PATH="$OUTPUT/SharedSupport"
 rm -rf .plum $OUTPUT
 mkdir -p $DST_PATH
+mkdir -p $DST_PATH/lua
+mkdir -p $DST_PATH/opencc
 git clone --depth 1 https://github.com/rime/plum.git $OUTPUT/.plum
 
 # 可以在这里添加rime的开源输入方案
@@ -89,6 +91,21 @@ rm -rf $OUTPUT/.xmjd6 && \
   cp $OUTPUT/.xmjd6/lua/* ${DST_PATH}/lua/ && \
   cp $OUTPUT/.xmjd6/opencc/* ${DST_PATH}/opencc/ && \
   cat $OUTPUT/.xmjd6/rime.lua >> ${DST_PATH}/rime.lua
+
+# 宇浩输入法
+# 方案来源：https://github.com/forFudan/yuhao
+rm -rf $OUTPUT/.yuhao && \
+  git clone https://github.com/forFudan/yuhao $OUTPUT/.yuhao && \
+  cp $OUTPUT/.yuhao/schema/yuhao*.yaml ${DST_PATH} && \
+  cp -r $OUTPUT/.yuhao/schema/lua/* ${DST_PATH}/lua/ && \
+  cp $OUTPUT/.yuhao/schema/opencc/* ${DST_PATH}/opencc/ && \
+  echo '-- 宇浩输入法' >> ${DST_PATH}/rime.lua && \
+  echo 'yuhao_char_filter = require("yuhao/yuhao_char_filter")' >> ${DST_PATH}/rime.lua && \
+  echo 'yuhao_char_first = yuhao_char_filter.yuhao_char_first' >> ${DST_PATH}/rime.lua && \
+  echo 'yuhao_char_only = yuhao_char_filter.yuhao_char_only' >> ${DST_PATH}/rime.lua && \
+  echo 'yuhao_single_char_only_for_full_code = require("yuhao/yuhao_single_char_only_for_full_code")' >> ${DST_PATH}/rime.lua && \
+  echo 'yuhao_postpone_full_code = require("yuhao/yuhao_postpone_full_code")' >> ${DST_PATH}/rime.lua && \
+  echo 'yuhao_helper = require("yuhao/yuhao_helper")' >> ${DST_PATH}/rime.lua
 
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
