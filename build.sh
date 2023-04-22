@@ -74,8 +74,9 @@ rm -rf $OUTPUT/.rime_jd && \
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
 
-# awk '($2 >= 500) {print}' essay.txt > essay.txt.min
-# mv essay.txt.min essay.txt
+# 减少essay.txt词库
+awk '($2 >= 500) {print}' essay.txt > essay.txt.min
+mv essay.txt.min essay.txt
 
 # sed -n '{
 #   s/^version: \(["]*\)\([0-9.]*\)\(["]*\)$/version: \1\2.minimal\3/
