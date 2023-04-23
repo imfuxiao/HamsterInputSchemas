@@ -68,8 +68,7 @@ rm -rf $OUTPUT/.rime_jd && \
   cp $OUTPUT/.rime_jd/xkjd6.*.yaml ${DST_PATH} && \
   cp $OUTPUT/.rime_jd/lua/* ${DST_PATH}/lua/ && \
   cp $OUTPUT/.rime_jd/opencc/EN2en.* ${DST_PATH}/opencc/ && \
-  echo 'date_time_translator = require("date_time")' >> ${DST_PATH}/rime.lua && \
-  echo 'xkjd6_filter = require("xkjd6_filter")' >> ${DST_PATH}/rime.lua
+  cat $OUTPUT/.rime_jd/rime.lua >> ${DST_PATH}/rime.lua
 
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
