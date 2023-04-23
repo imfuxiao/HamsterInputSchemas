@@ -68,14 +68,34 @@ rm -rf $OUTPUT/.rime_jd && \
   cp $OUTPUT/.rime_jd/xkjd6.*.yaml ${DST_PATH} && \
   cp $OUTPUT/.rime_jd/lua/* ${DST_PATH}/lua/ && \
   cp $OUTPUT/.rime_jd/opencc/EN2en.* ${DST_PATH}/opencc/ && \
-  echo 'date_time_translator = require("date_time")' >> ${DST_PATH}/rime.lua && \
-  echo 'xkjd6_filter = require("xkjd6_filter")' >> ${DST_PATH}/rime.lua
+  cat $OUTPUT/.rime_jd/rime.lua >> ${DST_PATH}/rime.lua
+
+# 星猫键道
+# 方案来源: https://github.com/wzxmer/xkjd6-rime 
+rm -rf $OUTPUT/.xmjd6 && \
+  git clone https://github.com/wzxmer/xkjd6-rime $OUTPUT/.xmjd6 && (
+    cd $OUTPUT/.xmjd6
+    rm -rf README.md weasel.custom.yaml default.custom.yaml
+  ) && 
+  cp $OUTPUT/.xmjd6/xmjd6.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd_W.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd_Y.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd_Z.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6_user.txt ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6cx.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6dz.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/liangfen.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/pinyin_simp.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/lua/* ${DST_PATH}/lua/ && \
+  cp $OUTPUT/.xmjd6/opencc/* ${DST_PATH}/opencc/ && \
+  cat $OUTPUT/.xmjd6/rime.lua >> ${DST_PATH}/rime.lua
 
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
 
-# awk '($2 >= 500) {print}' essay.txt > essay.txt.min
-# mv essay.txt.min essay.txt
+# 减少essay.txt词库
+awk '($2 >= 500) {print}' essay.txt > essay.txt.min
+mv essay.txt.min essay.txt
 
 # sed -n '{
 #   s/^version: \(["]*\)\([0-9.]*\)\(["]*\)$/version: \1\2.minimal\3/
