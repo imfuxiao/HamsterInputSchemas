@@ -70,6 +70,26 @@ rm -rf $OUTPUT/.rime_jd && \
   cp $OUTPUT/.rime_jd/opencc/EN2en.* ${DST_PATH}/opencc/ && \
   cat $OUTPUT/.rime_jd/rime.lua >> ${DST_PATH}/rime.lua
 
+# 星猫键道
+# 方案来源: https://github.com/wzxmer/xkjd6-rime 
+rm -rf $OUTPUT/.xmjd6 && \
+  git clone https://github.com/wzxmer/xkjd6-rime $OUTPUT/.xmjd6 && (
+    cd $OUTPUT/.xmjd6
+    rm -rf README.md weasel.custom.yaml default.custom.yaml
+  ) && 
+  cp $OUTPUT/.xmjd6/xmjd6.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd_W.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd_Y.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd_Z.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6_user.txt ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6cx.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6dz.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/liangfen.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/pinyin_simp.*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/lua/* ${DST_PATH}/lua/ && \
+  cp $OUTPUT/.xmjd6/opencc/* ${DST_PATH}/opencc/ && \
+  cat $OUTPUT/.xmjd6/rime.lua >> ${DST_PATH}/rime.lua
+
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
 
