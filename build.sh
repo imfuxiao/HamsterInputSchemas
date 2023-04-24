@@ -135,8 +135,8 @@ done
 # 隐藏五笔方案依赖的pinyin_simp.schema.yaml
 # 隐藏星猫键道方案依赖的xmjddz-xmjd6cx-xmjd_W-xmjd_Y-xmjd_Z
 ls *.schema.yaml | grep -v pinyin_simp.schema.yaml | grep -v liangfen.schema.yaml \
-  | grep -v liangfen.schema.yaml | grep -v xmjddz.schema.yaml
-  | grep -v xmjd6cx.schema.yaml | grep -v xmjd_W.schema.yaml 
+  | grep -v liangfen.schema.yaml | grep -v xmjddz.schema.yaml \
+  | grep -v xmjd6cx.schema.yaml | grep -v xmjd_W.schema.yaml \
   | grep -v xmjd_Y.schema.yaml | grep -v xmjd_Z.schema.yaml \
   | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
 # 这里不需要只替换luna_pinyin
