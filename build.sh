@@ -123,14 +123,14 @@ pushd "${DST_PATH}" > /dev/null
 # }' luna_pinyin.dict.yaml > luna_pinyin.dict.yaml.min
 # mv luna_pinyin.dict.yaml.min luna_pinyin.dict.yaml
 
-for schema in *.schema.yaml; do
-  sed '{
-    s/version: \(["]*\)\([0-9.]*\)\(["]*\)$/version: \1\2.minimal\3/
-    s/\(- stroke\)$/#\1/
-    s/\(- reverse_lookup_translator\)$/#\1/
-  }' ${schema} > ${schema}.min
-  mv ${schema}.min ${schema}
-done
+# for schema in *.schema.yaml; do
+#   sed '{
+#     s/version: \(["]*\)\([0-9.]*\)\(["]*\)$/version: \1\2.minimal\3/
+#     s/\(- stroke\)$/#\1/
+#     s/\(- reverse_lookup_translator\)$/#\1/
+#   }' ${schema} > ${schema}.min
+#   mv ${schema}.min ${schema}
+# done
 
 # 隐藏五笔方案依赖的pinyin_simp.schema.yaml
 # 隐藏星猫键道方案依赖的xmjddz-xmjd6cx-xmjd_W-xmjd_Y-xmjd_Z-xmjd6en
