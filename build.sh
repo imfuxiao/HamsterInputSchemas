@@ -83,14 +83,14 @@ rm -rf $OUTPUT/.rime_jd && \
 # 方案来源: https://github.com/wzxmer/xkjd6-rime 
 rm -rf $OUTPUT/.xmjd6 && \
   git clone --depth 1 https://github.com/wzxmer/xkjd6-rime $OUTPUT/.xmjd6 && (
-    cd $OUTPUT/.xmjd6/xmjd6
-    rm -rf README.md default.custom.yaml weasel.custom.yaml
+    cd $OUTPUT/.xmjd6/xmjd6-Hamster
+    rm -rf README.md default.custom.yaml
   ) && \
-  cp $OUTPUT/.xmjd6/xmjd6/*.yaml ${DST_PATH} && \
-  cp $OUTPUT/.xmjd6/xmjd6/*.txt ${DST_PATH} && \
-  cp $OUTPUT/.xmjd6/xmjd6/lua/*.lua ${DST_PATH}/lua/ && \
-  cp $OUTPUT/.xmjd6/xmjd6/opencc/* ${DST_PATH}/opencc/ && \
-  cat $OUTPUT/.xmjd6/xmjd6/rime.lua >> ${DST_PATH}/rime.lua
+  cp $OUTPUT/.xmjd6/xmjd6-Hamster/*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6-Hamster/*.txt ${DST_PATH} && \
+  cp $OUTPUT/.xmjd6/xmjd6-Hamster/lua/*.lua ${DST_PATH}/lua/ && \
+  cp $OUTPUT/.xmjd6/xmjd6-Hamster/opencc/* ${DST_PATH}/opencc/ && \
+  cat $OUTPUT/.xmjd6/xmjd6-Hamster/rime.lua >> ${DST_PATH}/rime.lua
 
 # 宇浩输入法
 # 方案来源：https://github.com/forFudan/yuhao
@@ -133,11 +133,11 @@ pushd "${DST_PATH}" > /dev/null
 # done
 
 # 隐藏五笔方案依赖的pinyin_simp.schema.yaml
-# 隐藏星猫键道方案依赖的xmjddz-xmjd6cx-xmjd_W-xmjd_Y-xmjd_Z-xmjd6en
+# 隐藏星猫键道方案依赖的xmjd6.dz/cx/W/Y/Z/en
 ls *.schema.yaml | grep -v pinyin_simp.schema.yaml | grep -v liangfen.schema.yaml \
-  | grep -v xmjd6en.schema.schema.yaml | grep -v xmjddz.schema.yaml \
-  | grep -v xmjd6cx.schema.yaml | grep -v xmjd_W.schema.yaml \
-  | grep -v xmjd_Y.schema.yaml | grep -v xmjd_Z.schema.yaml \
+  | grep -v xmjd6.en.schema.yaml | grep -v xmjd6.dz.schema.yaml \
+  | grep -v xmjd6.cx.schema.yaml | grep -v xmjd6.W.schema.yaml \
+  | grep -v xmjd6.Y.schema.yaml | grep -v xmjd6.Z.schema.yaml \
   | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
 # 这里不需要只替换luna_pinyin
 # grep -Ff schema_list.yaml default.yaml > schema_list.yaml.min
