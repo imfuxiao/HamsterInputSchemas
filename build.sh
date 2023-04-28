@@ -80,7 +80,7 @@ rm -rf $OUTPUT/.rime_jd && \
   cat $OUTPUT/.rime_jd/rime.lua >> ${DST_PATH}/rime.lua
 
 # 星猫键道
-# 方案来源: https://github.com/wzxmer/xkjd6-rime 
+# 方案来源: https://github.com/wzxmer/xkjd6-rime
 rm -rf $OUTPUT/.xmjd6 && \
   git clone --depth 1 https://github.com/wzxmer/xkjd6-rime $OUTPUT/.xmjd6 && (
     cd $OUTPUT/.xmjd6/xmjd6-Hamster
