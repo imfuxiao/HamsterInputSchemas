@@ -101,7 +101,7 @@ rm -rf $OUTPUT/.yuhao && \
   ) &&  \
   cp $OUTPUT/.yuhao/schema/*.yaml ${DST_PATH} && \
   cp -r $OUTPUT/.yuhao/schema/lua/* ${DST_PATH}/lua/ && \
-  cp $OUTPUT/.yuhao/schema/opencc/* ${DST_PATH}/opencc/ && \
+  echo '' >> ${DST_PATH}/rime.lua && \
   echo '-- 宇浩输入法' >> ${DST_PATH}/rime.lua && \
   echo 'yuhao_char_filter = require("yuhao/yuhao_char_filter")' >> ${DST_PATH}/rime.lua && \
   echo 'yuhao_char_first = yuhao_char_filter.yuhao_char_first' >> ${DST_PATH}/rime.lua && \
@@ -109,6 +109,9 @@ rm -rf $OUTPUT/.yuhao && \
   echo 'yuhao_single_char_only_for_full_code = require("yuhao/yuhao_single_char_only_for_full_code")' >> ${DST_PATH}/rime.lua && \
   echo 'yuhao_postpone_full_code = require("yuhao/yuhao_postpone_full_code")' >> ${DST_PATH}/rime.lua && \
   echo 'yuhao_helper = require("yuhao/yuhao_helper")' >> ${DST_PATH}/rime.lua
+  echo 'temp = require("yuhao/yuhao_chaifen")' >> ${DST_PATH}/rime.lua
+  echo 'yuhao_chaifen = temp.filter' >> ${DST_PATH}/rime.lua
+  echo 'yuhao_chaifen_processor = temp.processor' >> ${DST_PATH}/rime.lua
 
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
@@ -134,12 +137,12 @@ pushd "${DST_PATH}" > /dev/null
 
 # 隐藏五笔方案依赖的pinyin_simp.schema.yaml
 # 隐藏星猫键道方案依赖的xmjd6.dz/cx/W/Y/Z/en
-# 隐藏宇浩输入法依赖的yuhao_pinyin.schema.yaml
+# 隐藏宇浩输入法依赖的 yuhao_pinyin / yuhao_chaifen
 ls *.schema.yaml | grep -v pinyin_simp.schema.yaml | grep -v liangfen.schema.yaml \
   | grep -v xmjd6.en.schema.yaml | grep -v xmjd6.dz.schema.yaml \
   | grep -v xmjd6.cx.schema.yaml | grep -v xmjd6.W.schema.yaml \
   | grep -v xmjd6.Y.schema.yaml | grep -v xmjd6.Z.schema.yaml \
-  | grep -v yuhao_pinyin.schema.yaml \
+  | grep -v yuhao_pinyin.schema.yaml | grep -v yuhao_chaifen.schema.yaml \
   | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
 # 这里不需要只替换luna_pinyin
 # grep -Ff schema_list.yaml default.yaml > schema_list.yaml.min
