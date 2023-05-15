@@ -139,7 +139,7 @@ pushd "${DST_PATH}" > /dev/null
 # 隐藏星猫键道方案依赖的xmjd6.dz/cx/W/Y/Z/en
 # 隐藏宇浩输入法依赖的 yuhao_pinyin / yuhao_chaifen
 ls *.schema.yaml | grep -v pinyin_simp.schema.yaml | grep -v liangfen.schema.yaml \
-  | grep -v xmjd6.en.schema.yaml | grep -v xmjd6.dz.schema.yaml \
+  | grep -v xmjd6.en.schema.yaml \
   | grep -v xmjd6.cx.schema.yaml | grep -v xmjd6.W.schema.yaml \
   | grep -v xmjd6.Y.schema.yaml | grep -v xmjd6.Z.schema.yaml \
   | grep -v yuhao_pinyin.schema.yaml | grep -v yuhao_chaifen.schema.yaml \
