@@ -2,6 +2,8 @@
 # encoding: utf-8
 set -e
 
+WORK=`pwd`
+
 # 下载已编译过的rimelib
 rime_version=1.8.5
 rime_git_hash=08dd95f
@@ -112,6 +114,28 @@ rm -rf $OUTPUT/.yuhao && \
   echo 'temp = require("yuhao/yuhao_chaifen")' >> ${DST_PATH}/rime.lua
   echo 'yuhao_chaifen = temp.filter' >> ${DST_PATH}/rime.lua
   echo 'yuhao_chaifen_processor = temp.processor' >> ${DST_PATH}/rime.lua
+
+# 绘文字
+# 方案来源: https://github.com/rime/rime-emoji
+rime_emoji_version="15.0"
+rime_emoji_archive="rime-emoji-${rime_emoji_version}.zip"
+rime_emoji_download_url="https://github.com/rime/rime-emoji/archive/refs/tags/${rime_emoji_version}.zip"
+rm -rf $OUTPUT/.emoji && mkdir -p $OUTPUT/.emoji && (
+    cd $OUTPUT/.emoji
+    [ -z "${no_download}" ] && curl -Lo "${rime_emoji_archive}" "${rime_emoji_download_url}"
+    unzip "${rime_emoji_archive}" -d .
+    rm -rf ${rime_emoji_archive}
+    cd rime-emoji-${rime_emoji_version}
+    for target in category word; do
+      ${WORK}/.deps/bin/opencc -c ${WORK}/.deps/share/opencc/t2s.json -i opencc/emoji_${target}.txt > ${target}.txt
+      # workaround for rime/rime-emoji#48
+      # macOS sed 和 GNU sed 不同，见 https://stackoverflow.com/a/4247319/6676742
+      sed -i'.original' -e 's/鼔/鼓/g' ${target}.txt
+      cat ${target}.txt opencc/emoji_${target}.txt | awk '!seen[$1]++' > ../emoji_${target}.txt
+    done
+  ) && \
+cp ${OUTPUT}/.emoji/emoji_*.txt ${DST_PATH}/opencc/ && \
+cp ${OUTPUT}/.emoji/rime-emoji-${rime_emoji_version}/opencc/emoji.json ${DST_PATH}/opencc/
 
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
