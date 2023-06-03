@@ -96,11 +96,11 @@ rm -rf $OUTPUT/.xmjd6 && \
 # 方案来源：https://github.com/forFudan/yuhao
 rm -rf $OUTPUT/.yuhao && \
   git clone --depth 1 https://github.com/forFudan/yuhao $OUTPUT/.yuhao && (
-    cd $OUTPUT/.yuhao/schema
+    cd $OUTPUT/.yuhao/beta/schema
     rm -rf default.custom.yaml
   ) &&  \
-  cp $OUTPUT/.yuhao/schema/*.yaml ${DST_PATH} && \
-  cp -r $OUTPUT/.yuhao/schema/lua/* ${DST_PATH}/lua/ && \
+  cp $OUTPUT/.yuhao/beta/schema/*.yaml ${DST_PATH} && \
+  cp -r $OUTPUT/.yuhao/beta/schema/lua/* ${DST_PATH}/lua/ && \
   echo '' >> ${DST_PATH}/rime.lua && \
   echo '-- 宇浩输入法' >> ${DST_PATH}/rime.lua && \
   echo 'yuhao_char_filter = require("yuhao/yuhao_char_filter")' >> ${DST_PATH}/rime.lua && \
@@ -109,9 +109,10 @@ rm -rf $OUTPUT/.yuhao && \
   echo 'yuhao_single_char_only_for_full_code = require("yuhao/yuhao_single_char_only_for_full_code")' >> ${DST_PATH}/rime.lua && \
   echo 'yuhao_postpone_full_code = require("yuhao/yuhao_postpone_full_code")' >> ${DST_PATH}/rime.lua && \
   echo 'yuhao_helper = require("yuhao/yuhao_helper")' >> ${DST_PATH}/rime.lua
-  echo 'temp = require("yuhao/yuhao_chaifen")' >> ${DST_PATH}/rime.lua
+  echo 'local temp = require("yuhao/yuhao_chaifen")' >> ${DST_PATH}/rime.lua
   echo 'yuhao_chaifen = temp.filter' >> ${DST_PATH}/rime.lua
   echo 'yuhao_chaifen_processor = temp.processor' >> ${DST_PATH}/rime.lua
+  echo 'yuhao_embeded_cands = require("yuhao.yuhao_embeded_cands")' >> ${DST_PATH}/rime.lua
 
 # 整理 DST_PATH 输入方案文件, 生成最终版版本default.yaml
 pushd "${DST_PATH}" > /dev/null
