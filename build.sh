@@ -182,8 +182,7 @@ popd > /dev/null
 
 
 # copy
-# 先将squirrel.yaml拷贝出来
-cp -R SharedSupport/* ${DST_PATH}/ 
+cp -R SharedSupport/*.yaml ${DST_PATH}/ 
 
 # TODO: 提前编译
 # export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:$PWD/.deps/dist/lib
