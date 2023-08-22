@@ -106,6 +106,12 @@ rm -rf $OUTPUT/.yuhao && \
   echo '' >> ${DST_PATH}/rime.lua && \
   cat $OUTPUT/.yuhao/dist/yuhao/schema/rime.lua >> ${DST_PATH}/rime.lua
 
+# 虎码输入法
+# 方案来源：https://github.com/0ZDragon/rime-huma/tree/main
+rm -rf $OUTPUT/.tiger && \
+	git clone https://github.com/0ZDragon/rime-huma -b main $OUTPUT/.tiger && \
+	cp $OUTPUT/.tiger/* $DST_PATH/
+
 # 绘文字
 # 方案来源: https://github.com/rime/rime-emoji
 rime_emoji_version="15.0"
