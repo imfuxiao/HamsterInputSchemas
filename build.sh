@@ -158,12 +158,12 @@ pushd "${DST_PATH}" > /dev/null
 
 # 隐藏五笔方案依赖的pinyin_simp.schema.yaml
 # 隐藏星猫键道方案依赖的xmjd6.dz/cx/W/Y/Z/en
-# 隐藏宇浩输入法依赖的 yuhao_pinyin / yuhao_chaifen
+# 隐藏宇浩输入法依赖的 yuhao_pinyin / yuhao_chaifen / yuhao_chaifen_tw
 ls *.schema.yaml | grep -v pinyin_simp.schema.yaml | grep -v liangfen.schema.yaml \
   | grep -v xmjd6.en.schema.yaml \
   | grep -v xmjd6.cx.schema.yaml | grep -v xmjd6.W.schema.yaml \
   | grep -v xmjd6.Y.schema.yaml | grep -v xmjd6.Z.schema.yaml \
-  | grep -v yuhao_pinyin.schema.yaml | grep -v yuhao_chaifen.schema.yaml \
+  | grep -v yuhao_pinyin.schema.yaml | grep -v yuhao_chaifen.schema.yaml  | grep -v yuhao_chaifen_tw.schema.yaml \
   | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
 # 这里不需要只替换luna_pinyin
 # grep -Ff schema_list.yaml default.yaml > schema_list.yaml.min
