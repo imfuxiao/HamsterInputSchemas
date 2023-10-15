@@ -96,12 +96,14 @@ rm -rf $OUTPUT/.xmjd6 && \
 
 # 宇浩输入法
 # 方案来源：https://github.com/forFudan/yuhao
+mkdir -p $DST_PATH/yuhao
 rm -rf $OUTPUT/.yuhao && \
   git clone --depth 1 https://github.com/forFudan/yuhao $OUTPUT/.yuhao && (
     cd $OUTPUT/.yuhao/dist/yuhao/schema
     rm -rf default.custom.yaml
   ) &&  \
   cp $OUTPUT/.yuhao/dist/yuhao/schema/*.yaml ${DST_PATH} && \
+  cp $OUTPUT/.yuhao/dist/yuhao/schema/yuhao/*.yaml ${DST_PATH}/yuhao/ && \
   cp -r $OUTPUT/.yuhao/dist/yuhao/schema/lua/* ${DST_PATH}/lua/ && \
   echo '' >> ${DST_PATH}/rime.lua && \
   cat $OUTPUT/.yuhao/dist/yuhao/schema/rime.lua >> ${DST_PATH}/rime.lua
@@ -163,7 +165,7 @@ ls *.schema.yaml | grep -v pinyin_simp.schema.yaml | grep -v liangfen.schema.yam
   | grep -v xmjd6.en.schema.yaml \
   | grep -v xmjd6.cx.schema.yaml | grep -v xmjd6.W.schema.yaml \
   | grep -v xmjd6.Y.schema.yaml | grep -v xmjd6.Z.schema.yaml \
-  | grep -v yuhao_pinyin.schema.yaml | grep -v yuhao_chaifen.schema.yaml  | grep -v yuhao_chaifen_tw.schema.yaml \
+  | grep -v yuhao_tc.schema.yaml | grep -v yuhao_pinyin.schema.yaml | grep -v yuhao_chaifen.schema.yaml | grep -v yuhao_chaifen_tw.schema.yaml | grep -v yustar_chaifen.schema.yaml \
   | sed 's/^\(.*\)\.schema\.yaml/  - schema: \1/' > schema_list.yaml
 # 这里不需要只替换luna_pinyin
 # grep -Ff schema_list.yaml default.yaml > schema_list.yaml.min
