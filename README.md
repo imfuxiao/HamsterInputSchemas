@@ -69,7 +69,7 @@ txjx.custom.yaml
 * [🍀四叶草拼音输入方案](https://github.com/fkxxyz/rime-cloverpinyin)
 * [86版极点五笔](https://github.com/KyleBing/rime-wubi86-jidian)
 * [星空键道6](https://github.com/xkinput/Rime_JD)
-* [星猫键道百万词库版](https://github.com/wzxmer/xkjd6-rime)
+* [星猫键道](https://github.com/hugh7007/xmjd6-rere)
 * [宇浩输入法](https://github.com/forFudan/yuhao)
 
 如有侵权, 请联系我删除. 
