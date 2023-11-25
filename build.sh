@@ -65,13 +65,13 @@ rm -rf $OUTPUT/.$input_scheme_name && \
 
 # 虎码输入法
 # 方案来源：https://github.com/0ZDragon/rime-huma/tree/main
-# input_scheme_name=rime-huma
-# rm -rf $OUTPUT/.$input_scheme_name && \
-#   git clone --depth 1 https://github.com/0ZDragon/$input_scheme_name $OUTPUT/.$input_scheme_name && (
-#     cd $OUTPUT/.$input_scheme_name
-#     zip -r $input_scheme_name.zip ./*
-#   ) && \
-#   cp -R $OUTPUT/.$input_scheme_name/*.zip $OUTPUT
+input_scheme_name=rime-huma
+rm -rf $OUTPUT/.$input_scheme_name && \
+  git clone -b main --depth 1 https://github.com/0ZDragon/$input_scheme_name $OUTPUT/.$input_scheme_name && (
+    cd $OUTPUT/.$input_scheme_name
+    zip -r $input_scheme_name.zip ./*
+  ) && \
+  cp -R $OUTPUT/.$input_scheme_name/*.zip $OUTPUT
 
 
 # copy
