@@ -23,6 +23,13 @@ rm -rf $OUTPUT/.clover && mkdir -p $OUTPUT/.clover && (
 ) && \
 cp $OUTPUT/.clover/*.zip $OUTPUT
 
+sbxlm_version="20231129"
+sbxlm_archive="Sbxlm4iOS.${sbxlm_version}.zip"
+input_scheme_name=sbxlm
+sbxlm_download_url="https://github.com/sbxlm/sbxlm.github.io/releases/download/${sbxlm_version}/${sbxlm_archive}"
+cd $OUTPUT
+[ -z "${no_download}" ] && curl -L "${sbxlm_download_url}" -o $input_scheme_name.zip
+
 # 86版极点五笔
 # https://github.com/KyleBing/rime-wubi86-jidian
 input_scheme_name=rime-wubi86-jidian
