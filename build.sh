@@ -80,6 +80,16 @@ rm -rf $OUTPUT/.$input_scheme_name && \
   ) && \
   cp -R $OUTPUT/.$input_scheme_name/*.zip $OUTPUT
 
+# 092五笔
+# 方案来源：https://github.com/092wb/092wb-hamster/tree/main
+input_scheme_name=092wb-hamster
+rm -rf $OUTPUT/.$input_scheme_name && \
+  git clone -b main --depth 1 https://github.com/092wb/$input_scheme_name $OUTPUT/.$input_scheme_name && (
+    cd $OUTPUT/.$input_scheme_name
+    zip -r $input_scheme_name.zip ./*
+  ) && \
+  cp -R $OUTPUT/.$input_scheme_name/*.zip $OUTPUT
+
 
 # copy
 cp -R $OUTPUT/*.zip ${DST_PATH}/ 
